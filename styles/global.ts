@@ -38,6 +38,9 @@ export const GlobalStyle = createGlobalStyle`
 
     --primary-black: #202020;
 
+    --primary-blue: #3786B3;
+    --secondary-blue: #275b79;
+
     --text-title: #363F5F;
     --text-body: #969CB3;
   }
