@@ -1,5 +1,9 @@
 .container {
-  padding: 0 2rem;
+  padding: 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .main {
@@ -113,4 +117,25 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.searchUserSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnNewUser {
+  color: white;
+  background-color: #3786B3 ;
+  border: none;
+  padding: 0.8rem 2rem ;
+  border-radius: 0.125rem;
+
+  font-weight: 600;
+
+  transition: all ease-in-out .2s;
+}
+
+.btnNewUser:hover {
+  background-color: #32779e ;
 }
