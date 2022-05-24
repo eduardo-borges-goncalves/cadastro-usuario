@@ -7,14 +7,12 @@ export const RegisterContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 2rem;
 
   h1 {
-    margin-bottom: 5vh;
+    margin-bottom: 10vh;
   }
 
   form {
-    /* border: solid; */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -69,9 +67,25 @@ export const RegisterContainer = styled.div`
       width: 50%;
     }
 
-    button {
-      margin-top: 30vh;
-      margin-left: 1.5rem;
-    }
+  }
+  
+  .buttons {
+    margin-top: 15vh;
+    margin-right: 15%;
+    align-self: flex-end;
+    
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .success {
+    color: green;
+    font-weight: 600;
+    margin-top: 4rem;
+    padding: 1rem;
+    
+    border-radius: 0.5rem;
+    opacity: 0.9;
+    background-color: #d8eed3dc;
   }
 `

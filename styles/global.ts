@@ -38,6 +38,9 @@ export const GlobalStyle = createGlobalStyle`
 
     --primary-black: #202020;
 
+    --primary-gray: #2C2C2C;
+    --seconday-gray: #B4B6C1;
+
     --primary-blue: #3786B3;
     --secondary-blue: #275b79;
 
