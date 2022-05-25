@@ -3,13 +3,13 @@ import { ButtonWrapper } from "./styled";
 
 export type BtnProps = {
   children?: ReactNode, 
-  type?: string, 
+  type?: "button" | "submit" | "reset", 
   onClick?: any
 }
 
-export const PrimaryBlueButton = ({children, onClick}:BtnProps) => (
+export const PrimaryBlueButton = ({children, onClick, type}:BtnProps) => (
   <>
-  <ButtonWrapper onClick={onClick}>
+  <ButtonWrapper type={type} onClick={onClick}>
     {children}
   </ButtonWrapper>
   </>

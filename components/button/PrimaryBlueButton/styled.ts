@@ -8,7 +8,7 @@ export const ButtonWrapper = styled.button`
   border-radius: 0.125rem;
   
   font-weight: 600;
-  width: 12rem;
+  width: 10rem;
   
   transition: all ease-in-out .2s;
   
