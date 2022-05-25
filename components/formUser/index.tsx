@@ -14,7 +14,8 @@ type FormUserProps = {
   setUser: Dispatch<SetStateAction<User>>,
   _id?: string | string[], 
   setUpdateUser: Dispatch<SetStateAction<UpdateUser>>, 
-  updateUser: UpdateUser
+  updateUser: UpdateUser, 
+  setErro: Dispatch<SetStateAction<string>>
 }
 
 type UpdateUser = {
@@ -29,22 +30,31 @@ export const FormUser = ({
   setUser,
   _id, 
   setUpdateUser, 
-  updateUser
+  updateUser, 
+  setErro
 }: FormUserProps) => {
   const disabledBtn  = updateUser.deleted || updateUser.new || updateUser.updated 
   const router = useRouter()
 
   const updateUserFunc = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const response = await apiClient.patch(`/users/${_id}`, {...user})
-    response.status && setUpdateUser({...updateUser, updated: true})
-    setTimeout(()=> router.push(`/view-user/${_id}`), 1000)
+    setErro("")
+    try {
+      await apiClient.patch(`/users/${_id}`, {...user})
+ 
+      setUpdateUser({...updateUser, updated: true})
+      setTimeout(()=> router.push(`/view-user/${_id}`), 1000)
+    } catch { setErro("Erro ao tentar atualizar usuário")}
   }
 
   const deleteUser = async () => {
-    const response = await apiClient.delete(`/users/${_id}`);
-    response.status && setUpdateUser({...updateUser, deleted: true})
-    setTimeout(()=> router.push(`/`), 1000)
+    setErro("")
+    try {
+      await apiClient.delete(`/users/${_id}`);
+      
+      setUpdateUser({...updateUser, deleted: true})
+      setTimeout(()=> router.push(`/`), 1000)
+    } catch { setErro("Erro ao tentar atualizar usuário") }
   }
 
   return (

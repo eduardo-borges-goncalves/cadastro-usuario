@@ -6,6 +6,7 @@ import { User } from "../../types/user";
 import { RegisterContainer } from "./style";
 
 export default function RegisterUser() {
+  const [erro, setErro] = useState("")
   const [updateUser, setUpdateUser] = useState({
     new: false,
     deleted: false,
@@ -33,9 +34,10 @@ export default function RegisterUser() {
   const createUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await apiClient.post("/users", { ...user })
-    console.log(response)
-    response && setUpdateUser({ ...updateUser, new: true })
-    setTimeout(()=> router.push(`/view-user/${response.data.user._id}`), 500)
+  
+    if (response.status === 200) 
+      setUpdateUser({ ...updateUser, new: true })
+      setTimeout(()=> router.push(`/view-user/${response.data.user._id}`), 500)
   }
 
   useEffect(() => { _id && getUser() }, [_id])
@@ -47,11 +49,18 @@ export default function RegisterUser() {
           :
           <h1>Cadastrar Usuário</h1>
       }
-      <div className={ updateUser.new || updateUser.updated || updateUser.deleted ? "success" : "hidden" }>
-        { updateUser.new && <span >Novo usuário cadastrado com sucesso!</span>}
-        { updateUser.updated && <span >Usuário atualizado com sucesso!</span>}
-        { updateUser.deleted && <span> Usuário deletado!</span>}
-      </div>
+      { 
+        erro ?
+          <div className="erro">
+            <span>{erro}</span>
+          </div>
+          :
+          <div className={ updateUser.new || updateUser.updated || updateUser.deleted ? "success" : "hidden" }>
+            { updateUser.new && <span >Novo usuário cadastrado com sucesso!</span>}
+            { updateUser.updated && <span >Usuário atualizado com sucesso!</span>}
+            { updateUser.deleted && <span> Usuário deletado!</span>}
+          </div>
+      }
       <FormUser
         createUser={createUser}
         setUser={setUser}
@@ -59,6 +68,7 @@ export default function RegisterUser() {
         _id={_id}
         updateUser={updateUser}
         setUpdateUser={setUpdateUser}
+        setErro={setErro}
       />
     </RegisterContainer>
   )
