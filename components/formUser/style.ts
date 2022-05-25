@@ -59,21 +59,10 @@ export const FormWrapper = styled.form`
 
   .buttons {
     margin-top: 18vh;
-    margin-right: 2rem;
-    align-self: center;
+    /* margin-right: 2rem; */
     align-self: flex-end;
+    align-self: center;
     display: flex;
     gap: 0.5rem;
-  }
-
-  .success {
-    color: green;
-    font-weight: 600;
-    margin-top: 4rem;
-    padding: 1rem;
-    
-    border-radius: 0.5rem;
-    opacity: 0.9;
-    background-color: #d8eed3dc;
   }
 `

@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Dispatch, FormEvent, SetStateAction, useState } from "react"
+import { useRouter } from "next/router"
+import { Dispatch, FormEvent, SetStateAction } from "react"
 import apiClient from "../../services/api-client"
 import { User } from "../../types/user"
 import { DeleteButton } from "../button/DeleteButton"
@@ -12,7 +13,14 @@ type FormUserProps = {
   user: User,
   setUser: Dispatch<SetStateAction<User>>,
   _id?: string | string[], 
-  setDeleted: Dispatch<SetStateAction<boolean>>
+  setUpdateUser: Dispatch<SetStateAction<UpdateUser>>, 
+  updateUser: UpdateUser
+}
+
+type UpdateUser = {
+  new: boolean,
+  deleted: boolean,
+  updated: boolean,
 }
 
 export const FormUser = ({
@@ -20,21 +28,27 @@ export const FormUser = ({
   user,
   setUser,
   _id, 
-  setDeleted, 
+  setUpdateUser, 
+  updateUser
 }: FormUserProps) => {
+  const disabledBtn  = updateUser.deleted || updateUser.new || updateUser.updated 
+  const router = useRouter()
 
-  const updateUser = async (e:FormEvent<HTMLFormElement>) => {
+  const updateUserFunc = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await apiClient.patch(`/users/${_id}`, {...user})
+    response.status && setUpdateUser({...updateUser, updated: true})
+    setTimeout(()=> router.push(`/view-user/${_id}`), 1000)
   }
 
   const deleteUser = async () => {
     const response = await apiClient.delete(`/users/${_id}`);
-    response.status && setDeleted(true)
+    response.status && setUpdateUser({...updateUser, deleted: true})
+    setTimeout(()=> router.push(`/`), 1000)
   }
 
   return (
-    <FormWrapper action="" onSubmit={_id ? (e) => updateUser(e) :(e) => createUser(e) }>
+    <FormWrapper action="" onSubmit={_id ? (e) => updateUserFunc(e) :(e) => createUser(e) }>
       <fieldset className="f-1">
         <input
           value={_id && user.name}
@@ -78,44 +92,22 @@ export const FormUser = ({
       <fieldset className="f-3">
         <label htmlFor="experience">Possui experiência com desenvolvimento?</label>
         <div>
-          {
-            user.experience ?
-              <>
-                <span>Sim</span>
-                <input
-                  checked
-                  required
-                  type="radio"
-                  name="experience"
-                  id=""
-                  onChange={() => setUser({ ...user, experience: true })} />
-                <span>Não</span>
-                <input
-                  required
-                  type="radio"
-                  name="experience"
-                  id=""
-                  onChange={() => setUser({ ...user, experience: false })} />
-              </>
-              :
-              <>
-              <span>Sim</span>
-              <input
-              required
-              type="radio"
-              name="experience"
-              id=""
-              onChange={() => setUser({ ...user, experience: true })} />
-              <span>Não</span>
-              <input
-                checked
-                required
-                type="radio"
-                name="experience"
-                id=""
-                onChange={() => setUser({ ...user, experience: false })} />
-              </>
-          }
+          <span>Sim</span>
+          <input
+            checked={user.experience}
+            required
+            type="radio"
+            name="experience"
+            id=""
+            onChange={() => setUser({ ...user, experience: true })} />
+          <span>Não</span>
+          <input
+            checked={!user.experience}
+            required
+            type="radio"
+            name="experience"
+            id=""
+            onChange={() => setUser({ ...user, experience: false })} />
         </div>
       </fieldset>
       <fieldset className="f-4">
@@ -136,14 +128,19 @@ export const FormUser = ({
       </fieldset>
       <div className="buttons">
         <Link href="/">
-          <a> <GrayButton> Cancelar </GrayButton> </a>
+          <GrayButton disabled={disabledBtn}> Cancelar </GrayButton> 
         </Link>
         {_id && 
-            <DeleteButton type="button" onClick={() => deleteUser()}>
+            <DeleteButton 
+              disabled={disabledBtn} 
+              type="button" 
+              onClick={() => deleteUser()}>
               Excluir
             </DeleteButton>
         }
-        <PrimaryBlueButton type="submit">
+        <PrimaryBlueButton 
+          disabled={disabledBtn} 
+          type="submit">
           {_id ? "Atualizar" : "Cadastrar"}
         </PrimaryBlueButton>
       </div>
