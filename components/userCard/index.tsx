@@ -1,17 +1,30 @@
 import Link from "next/link"
+import apiClient from "../../services/api-client"
+import { User } from "../../types/user"
 
-export const UserCard = () => {
+export const UserCard = ({
+  name, 
+  age, 
+  language, 
+  operationArea, 
+  professionalSituation, 
+  experience, 
+  linkedin, 
+  github, 
+  _id
+}: User ) => {
+
   return(
-    <Link href="/edit-user">
+    <Link href={`/edit-user/${_id}`}>
       <tr>
-        <td>Eduardo</td>
-        <td>27</td>
-        <td>Javascript</td>
-        <td>Front end</td>
-        <td>Transição de carreira</td>
-        <td>Não</td>
-        <td>LinkedIn</td>
-        <td>GitHub</td>
+        <td>{name}</td>
+        <td>{age}</td>
+        <td>{language} </td>
+        <td>{operationArea} </td>
+        <td>{professionalSituation}</td>
+        <td>{experience? "Possui": "Não possui"}</td>
+        <td>{linkedin}</td>
+        <td>{github}</td>
       </tr>
     </Link>
   )

@@ -1,6 +1,11 @@
+import { User } from "../../types/user"
 import { UserCard } from "../userCard"
 
-export const UsersList = () => {
+type UsersListProps ={
+  users: User[]
+}
+
+export const UsersList = ({users}: UsersListProps) => {
   return(
     <table>
       <thead>
@@ -16,7 +21,11 @@ export const UsersList = () => {
         </tr>
       </thead>
       <tbody>
-        <UserCard/>
+        {
+          users.map(user => (
+            <UserCard key={user._id} {...user} />
+          ))
+        }
       </tbody>
     </table>
   )
