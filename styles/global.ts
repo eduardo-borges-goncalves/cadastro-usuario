@@ -44,6 +44,8 @@ export const GlobalStyle = createGlobalStyle`
     --primary-blue: #3786B3;
     --secondary-blue: #275b79;
 
+    --primary-red: #b1202c;
+
     --text-title: #363F5F;
     --text-body: #969CB3;
   }
