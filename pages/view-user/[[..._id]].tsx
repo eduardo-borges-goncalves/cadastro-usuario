@@ -20,7 +20,6 @@ export default function ViewUser () {
   const {_id} = router.query 
 
   const getUser = async () => {
-    console.log("======")
     const response = await apiClient.get(`/users/${_id}`)
 
     response && setUser(response.data)

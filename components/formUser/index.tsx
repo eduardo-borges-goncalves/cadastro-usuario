@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { Dispatch, FormEvent, SetStateAction } from "react"
+import { useUsers } from "../../contexts/users"
 import apiClient from "../../services/api-client"
 import { User } from "../../types/user"
 import { DeleteButton } from "../button/DeleteButton"
@@ -9,7 +10,7 @@ import { PrimaryBlueButton } from "../button/PrimaryBlueButton"
 import { FormWrapper } from "./style"
 
 type FormUserProps = {
-  createUser: (e: FormEvent<HTMLFormElement>) => Promise<void>,
+  createUserAPI: (e: FormEvent<HTMLFormElement>) => Promise<void>,
   user: User,
   setUser: Dispatch<SetStateAction<User>>,
   _id?: string | string[], 
@@ -25,7 +26,7 @@ type UpdateUser = {
 }
 
 export const FormUser = ({
-  createUser,
+  createUserAPI,
   user,
   setUser,
   _id, 
@@ -33,7 +34,10 @@ export const FormUser = ({
   updateUser, 
   setErro
 }: FormUserProps) => {
+
   const disabledBtn  = updateUser.deleted || updateUser.new || updateUser.updated 
+  const { upUser, delUser } = useUsers()
+
   const router = useRouter()
 
   const updateUserFunc = async (e:FormEvent<HTMLFormElement>) => {
@@ -41,7 +45,8 @@ export const FormUser = ({
     setErro("")
     try {
       await apiClient.patch(`/users/${_id}`, {...user})
- 
+      
+      upUser(user)
       setUpdateUser({...updateUser, updated: true})
       setTimeout(()=> router.push(`/view-user/${_id}`), 1000)
     } catch { setErro("Erro ao tentar atualizar usuário")}
@@ -51,14 +56,15 @@ export const FormUser = ({
     setErro("")
     try {
       await apiClient.delete(`/users/${_id}`);
-      
+
+      delUser(_id[0])
       setUpdateUser({...updateUser, deleted: true})
       setTimeout(()=> router.push(`/`), 1000)
     } catch { setErro("Erro ao tentar atualizar usuário") }
   }
 
   return (
-    <FormWrapper action="" onSubmit={_id ? (e) => updateUserFunc(e) :(e) => createUser(e) }>
+    <FormWrapper action="" onSubmit={_id ? (e) => updateUserFunc(e) :(e) => createUserAPI(e) }>
       <fieldset className="f-1">
         <input
           value={_id && user.name}

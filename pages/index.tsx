@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { PrimaryBlueButton } from '../components/button/PrimaryBlueButton'
 import { UsersList } from '../components/usersList'
+import { useUsers } from '../contexts/users'
 import apiClient from '../services/api-client'
 import { User } from '../types/user'
 import { HomeContainer, HomeSection } from './style'
@@ -10,18 +11,20 @@ import { HomeContainer, HomeSection } from './style'
 // desenvolver uma barra de busca de usuários 
 
 const Home: NextPage = () => {
-  const [ users, setUsers ] = useState <User[]> ([])
+  // const [ users, setUsers ] = useState <User[]> ([])
 
-  useEffect(()=> {
-    const getUsers = async () => {
-      const response = await apiClient.get("/users")
+  const { users } = useUsers()
 
-      console.log("---", response)
+  // useEffect(()=> {
+  //   const getUsers = async () => {
+  //     const response = await apiClient.get("/users")
 
-      response && setUsers(response.data)
-    }
-    getUsers()
-  }, [])
+  //     console.log("---", response)
+
+  //     response && setUsers(response.data)
+  //   }
+  //   getUsers()
+  // }, [])
 
 
   return (
