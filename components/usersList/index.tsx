@@ -1,5 +1,6 @@
 import { User } from "../../types/user"
 import { UserCard } from "../userCard"
+import { UserListTable } from "./style"
 
 type UsersListProps ={
   users: User[]
@@ -7,7 +8,7 @@ type UsersListProps ={
 
 export const UsersList = ({users}: UsersListProps) => {
   return(
-    <table>
+    <UserListTable>
       <thead>
         <tr>
           <th>Nome</th>
@@ -27,6 +28,6 @@ export const UsersList = ({users}: UsersListProps) => {
           ))
         }
       </tbody>
-    </table>
+    </UserListTable>
   )
 }

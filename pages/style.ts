@@ -11,9 +11,8 @@ export const HomeContainer = styled.div`
 export const HomeSection = styled.section`
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-left: 2rem;
-    /* border: solid; */
+    justify-content: flex-end;
+    gap: 1.5rem;
 
   .btnNewUser {
     color: white;

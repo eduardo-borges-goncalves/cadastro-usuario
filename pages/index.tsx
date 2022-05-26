@@ -26,6 +26,7 @@ const Home: NextPage = () => {
 
   return (
     <HomeContainer >
+      <h1> Usuários </h1>
       <HomeSection >
         <div>
           <input placeholder="Pesquisar Usuário" type="search" id='buscar-usuario' />
