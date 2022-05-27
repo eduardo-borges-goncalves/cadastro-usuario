@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { HomeContainer } from "../style"
+import { HomeContainer } from "./home-style"
 
 export const ViewUserContainer = styled(HomeContainer)`
   gap: 1rem;

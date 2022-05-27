@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import apiClient from "../../services/api-client"
 import { User } from "../../types/user"
-import { ViewUserContainer } from "./style"
+import { ViewUserContainer } from "../../styles/pages-styles/view-user-style"
 
 export default function ViewUser () {
   const [ user, setUser ] = useState <User>({
@@ -20,13 +20,12 @@ export default function ViewUser () {
   const {_id} = router.query 
 
   const getUser = async () => {
-    console.log("======")
     const response = await apiClient.get(`/users/${_id}`)
 
     response && setUser(response.data)
   }
 
-  useEffect(() => { getUser()}, [])
+  useEffect(() => { _id && getUser()}, [])
 
   return (
     <ViewUserContainer>

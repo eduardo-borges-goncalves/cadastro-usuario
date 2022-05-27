@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { Dispatch, FormEvent, SetStateAction } from "react"
+import { useUsers } from "../../contexts/users"
 import apiClient from "../../services/api-client"
 import { User } from "../../types/user"
 import { DeleteButton } from "../button/DeleteButton"
@@ -9,7 +10,7 @@ import { PrimaryBlueButton } from "../button/PrimaryBlueButton"
 import { FormWrapper } from "./style"
 
 type FormUserProps = {
-  createUser: (e: FormEvent<HTMLFormElement>) => Promise<void>,
+  createUserAPI: (e: FormEvent<HTMLFormElement>) => Promise<void>,
   user: User,
   setUser: Dispatch<SetStateAction<User>>,
   _id?: string | string[], 
@@ -25,7 +26,7 @@ type UpdateUser = {
 }
 
 export const FormUser = ({
-  createUser,
+  createUserAPI,
   user,
   setUser,
   _id, 
@@ -33,7 +34,10 @@ export const FormUser = ({
   updateUser, 
   setErro
 }: FormUserProps) => {
+
   const disabledBtn  = updateUser.deleted || updateUser.new || updateUser.updated 
+  const { upUser, delUser } = useUsers()
+
   const router = useRouter()
 
   const updateUserFunc = async (e:FormEvent<HTMLFormElement>) => {
@@ -41,7 +45,8 @@ export const FormUser = ({
     setErro("")
     try {
       await apiClient.patch(`/users/${_id}`, {...user})
- 
+      
+      upUser(user)
       setUpdateUser({...updateUser, updated: true})
       setTimeout(()=> router.push(`/view-user/${_id}`), 1000)
     } catch { setErro("Erro ao tentar atualizar usuário")}
@@ -51,17 +56,18 @@ export const FormUser = ({
     setErro("")
     try {
       await apiClient.delete(`/users/${_id}`);
-      
+
+      delUser(_id[0])
       setUpdateUser({...updateUser, deleted: true})
       setTimeout(()=> router.push(`/`), 1000)
     } catch { setErro("Erro ao tentar atualizar usuário") }
   }
 
   return (
-    <FormWrapper action="" onSubmit={_id ? (e) => updateUserFunc(e) :(e) => createUser(e) }>
+    <FormWrapper action="" onSubmit={_id ? (e) => updateUserFunc(e) :(e) => createUserAPI(e) }>
       <fieldset className="f-1">
         <input
-          value={_id && user.name}
+          value={_id && user.name || ""}
           className="i-1"
           required
           minLength={3}
@@ -69,7 +75,7 @@ export const FormUser = ({
           placeholder="Nome"
           onChange={(e) => setUser({ ...user, name: e.target.value })} />
         <input
-          value={_id && user.age }
+          value={_id && user.age || ""}
           className="i-2"
           required
           type="text"
@@ -78,21 +84,21 @@ export const FormUser = ({
       </fieldset>
       <fieldset className="f-2">
         <input
-          value={_id && user.language}
+          value={_id && user.language || ""}
           required
           minLength={3}
           type="text"
           placeholder="Linguagem"
           onChange={(e) => setUser({ ...user, language: e.target.value })} />
         <input
-          value={_id && user.operationArea}
+          value={_id && user.operationArea || ""}
           required
           minLength={3}
           type="text"
           placeholder="Área de atuação "
           onChange={(e) => setUser({ ...user, operationArea: e.target.value })} />
         <input
-          value={_id && user.professionalSituation}
+          value={_id && user.professionalSituation || ""}
           required
           minLength={3}
           type="text"
@@ -122,14 +128,14 @@ export const FormUser = ({
       </fieldset>
       <fieldset className="f-4">
         <input
-          value={_id && user.linkedin}
+          value={_id && user.linkedin || ""}
           required
           minLength={3}
           type="text"
           placeholder="LinkedIn"
           onChange={(e) => setUser({ ...user, linkedin: e.target.value })} />
         <input
-          value={_id && user.github}
+          value={_id && user.github || ""}
           required
           minLength={3}
           type="text"
@@ -138,21 +144,27 @@ export const FormUser = ({
       </fieldset>
       <div className="buttons">
         <Link href="/">
-          <GrayButton disabled={disabledBtn}> Cancelar </GrayButton> 
+          <a>
+            <GrayButton disabled={disabledBtn}> Cancelar </GrayButton> 
+          </a>
         </Link>
         {_id && 
+          <a>
             <DeleteButton 
               disabled={disabledBtn} 
               type="button" 
               onClick={() => deleteUser()}>
-              Excluir
+                Excluir
             </DeleteButton>
+          </a>
         }
-        <PrimaryBlueButton 
-          disabled={disabledBtn} 
-          type="submit">
-          {_id ? "Atualizar" : "Cadastrar"}
-        </PrimaryBlueButton>
+        <a>
+          <PrimaryBlueButton 
+            disabled={disabledBtn} 
+            type="submit">
+            {_id ? "Atualizar" : "Cadastrar"}
+          </PrimaryBlueButton>
+        </a>
       </div>
     </FormWrapper>
   )

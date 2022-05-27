@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HomeContainer } from "../style";
+import { HomeContainer } from "./home-style";
 
 export const RegisterContainer = styled(HomeContainer)`
   padding: 5% 0 ;

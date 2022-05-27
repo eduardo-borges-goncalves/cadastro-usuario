@@ -1,37 +1,22 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import { PrimaryBlueButton } from '../components/button/PrimaryBlueButton'
 import { UsersList } from '../components/usersList'
-import apiClient from '../services/api-client'
-import { User } from '../types/user'
-import { HomeContainer, HomeSection } from './style'
+import { useUsers } from '../contexts/users'
+import { HomeContainer, HomeSection } from '../styles/pages-styles/home-style'
 
-// desenvolver uma barra de busca de usuários 
 
 const Home: NextPage = () => {
-  const [ users, setUsers ] = useState <User[]> ([])
-
-  useEffect(()=> {
-    const getUsers = async () => {
-      const response = await apiClient.get("/users")
-
-      console.log("---", response)
-
-      response && setUsers(response.data)
-    }
-    getUsers()
-  }, [])
-
+  const { users } = useUsers()
 
   return (
     <HomeContainer >
+      <h1> Usuários </h1>
       <HomeSection >
-        <div>
-          <input placeholder="Pesquisar Usuário" type="search" id='buscar-usuario' />
-        </div>
           <Link href="/edit-user">
+            <a>
             <PrimaryBlueButton> Novo Usuário </PrimaryBlueButton>
+            </a>
           </Link>
       </HomeSection>
       <UsersList users={users} />
