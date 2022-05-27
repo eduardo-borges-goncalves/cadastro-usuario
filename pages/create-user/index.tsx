@@ -1,17 +1,15 @@
 import { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
-import { FormUser } from "../../components/formUser";
+import { FormEvent, useState } from "react";
+import { FormUser, UpdateUser } from "../../components/FormUser";
 import { useUsers } from "../../contexts/users";
 import apiClient from "../../services/api-client";
 import { User } from "../../types/user";
 import { RegisterContainer } from "../../styles/pages-styles/edit-user-style";
 
-export default function RegisterUser() {
+export default function CreateUser() {
   const [erro, setErro] = useState("")
-  const [updateUser, setUpdateUser] = useState({
-    new: false,
-    deleted: false,
-    updated: false,
+  const [updateUser, setUpdateUser] = useState<UpdateUser>({
+    new: false 
   })
   const [user, setUser] = useState<User>({
     name: "",
@@ -23,15 +21,9 @@ export default function RegisterUser() {
     linkedin: '',
     github: ""
   })
-  const { users, createUser } = useUsers()
+  const {createUser} = useUsers()
 
   const router = useRouter()
-  const {_id} = router.query
-
-  const getUser = () => {
-    const user = users.filter(user =>user._id === _id[0]);
-    setUser(user[0])
-  }
 
   const createUserAPI = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -44,32 +36,23 @@ export default function RegisterUser() {
     }
   }
 
-  useEffect(() => { _id && getUser() }, [_id])
-
   return (
     <RegisterContainer>
-      { _id ?
-          <h1>Editar Usuário</h1>
-          :
-          <h1>Cadastrar Usuário</h1>
-      }
+      <h1>Cadastrar Usuário</h1>
       { 
         erro ?
           <div className="erro">
             <span>{erro}</span>
           </div>
           :
-          <div className={ updateUser.new || updateUser.updated || updateUser.deleted ? "success" : "hidden" }>
+          <div className={ updateUser.new ? "success" : "hidden" }>
             { updateUser.new && <span >Novo usuário cadastrado com sucesso!</span>}
-            { updateUser.updated && <span >Usuário atualizado com sucesso!</span>}
-            { updateUser.deleted && <span> Usuário deletado!</span>}
           </div>
       }
       <FormUser
         createUserAPI={createUserAPI}
         setUser={setUser}
         user={user}
-        _id={_id}
         updateUser={updateUser}
         setUpdateUser={setUpdateUser}
         setErro={setErro}

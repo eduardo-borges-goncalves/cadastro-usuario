@@ -13,7 +13,7 @@ const Home: NextPage = () => {
     <HomeContainer >
       <h1> Usuários </h1>
       <HomeSection >
-          <Link href="/edit-user">
+          <Link href="/create-user">
             <a>
             <PrimaryBlueButton> Novo Usuário </PrimaryBlueButton>
             </a>
