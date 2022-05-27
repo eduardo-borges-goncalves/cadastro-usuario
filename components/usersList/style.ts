@@ -15,11 +15,14 @@ export const UserListTable = styled.table`
     font-weight: bold;
     color:rgb(69, 91, 114);
     text-transform: capitalize;
+    text-align: center;
   }
    
   tbody {
     tr {
       transition: all ease-in-out .1s;
+      height: 3rem;
+
       
       :hover {
         background-color: rgb(192, 203, 214, 0.3);
