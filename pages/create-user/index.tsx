@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import { FormUser, UpdateUser } from "../../components/FormUser";
+import { FormUser, UpdateUser } from "../../components/formUser";
 import { useUsers } from "../../contexts/users";
 import apiClient from "../../services/api-client";
 import { User } from "../../types/user";
