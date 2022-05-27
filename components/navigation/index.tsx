@@ -9,7 +9,7 @@ export const Navigation = () => {
     <NavigationHeader>
     <nav>
       { router.asPath !== "/" && <Link href="/">Home</Link> }
-      { router.asPath !== "/edit-user" && <Link href="/edit-user">Novo Usuário</Link> }
+      { router.asPath !== "/create-user" && <Link href="/create-user">Novo Usuário</Link> }
     </nav>
 
     </NavigationHeader>

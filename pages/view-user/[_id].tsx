@@ -19,6 +19,8 @@ export default function ViewUser () {
   const router = useRouter()
   const {_id} = router.query 
 
+  console.log(_id)
+
   const getUser = async () => {
     const response = await apiClient.get(`/users/${_id}`)
 
