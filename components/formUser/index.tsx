@@ -10,7 +10,7 @@ import { PrimaryBlueButton } from "../button/PrimaryBlueButton"
 import { FormWrapper } from "./style"
 
 type FormUserProps = {
-  createUserAPI: (e: FormEvent<HTMLFormElement>) => Promise<void>,
+  createUserAPI?: (e: FormEvent<HTMLFormElement>) => Promise<void>,
   user: User,
   setUser: Dispatch<SetStateAction<User>>,
   _id?: string | string[], 
@@ -19,10 +19,10 @@ type FormUserProps = {
   setErro: Dispatch<SetStateAction<string>>
 }
 
-type UpdateUser = {
-  new: boolean,
-  deleted: boolean,
-  updated: boolean,
+export type UpdateUser = {
+  new?: boolean,
+  deleted?: boolean,
+  updated?: boolean,
 }
 
 export const FormUser = ({
@@ -57,17 +57,18 @@ export const FormUser = ({
     try {
       await apiClient.delete(`/users/${_id}`);
 
-      delUser(_id[0])
+      delUser(_id)
       setUpdateUser({...updateUser, deleted: true})
       setTimeout(()=> router.push(`/`), 1000)
     } catch { setErro("Erro ao tentar atualizar usuário") }
   }
 
   return (
-    <FormWrapper action="" onSubmit={_id ? (e) => updateUserFunc(e) :(e) => createUserAPI(e) }>
-      <fieldset className="f-1">
+    <FormWrapper action=""
+      onSubmit={!_id && createUserAPI ? (e) => createUserAPI(e) : (e) => updateUserFunc(e)}>
+      <fieldset className="f-1" >
         <input
-          value={_id && user.name || ""}
+          value={user && user.name || ""}
           className="i-1"
           required
           minLength={3}
@@ -75,7 +76,7 @@ export const FormUser = ({
           placeholder="Nome"
           onChange={(e) => setUser({ ...user, name: e.target.value })} />
         <input
-          value={_id && user.age || ""}
+          value={user && user.age || ""}
           className="i-2"
           required
           type="text"
@@ -84,21 +85,21 @@ export const FormUser = ({
       </fieldset>
       <fieldset className="f-2">
         <input
-          value={_id && user.language || ""}
+          value={user && user.language || ""}
           required
           minLength={3}
           type="text"
           placeholder="Linguagem"
           onChange={(e) => setUser({ ...user, language: e.target.value })} />
         <input
-          value={_id && user.operationArea || ""}
+          value={user && user.operationArea || ""}
           required
           minLength={3}
           type="text"
           placeholder="Área de atuação "
           onChange={(e) => setUser({ ...user, operationArea: e.target.value })} />
         <input
-          value={_id && user.professionalSituation || ""}
+          value={user && user.professionalSituation || ""}
           required
           minLength={3}
           type="text"
@@ -110,6 +111,7 @@ export const FormUser = ({
         <div>
           <span>Sim</span>
           <input
+            data-testid="checkedForm"
             checked={user.experience}
             required
             type="radio"
@@ -118,6 +120,7 @@ export const FormUser = ({
             onChange={() => setUser({ ...user, experience: true })} />
           <span>Não</span>
           <input
+            data-testid="checkedForm"
             checked={!user.experience}
             required
             type="radio"
@@ -128,14 +131,14 @@ export const FormUser = ({
       </fieldset>
       <fieldset className="f-4">
         <input
-          value={_id && user.linkedin || ""}
+          value={user && user.linkedin || ""}
           required
           minLength={3}
           type="text"
           placeholder="LinkedIn"
           onChange={(e) => setUser({ ...user, linkedin: e.target.value })} />
         <input
-          value={_id && user.github || ""}
+          value={user && user.github || ""}
           required
           minLength={3}
           type="text"
