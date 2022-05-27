@@ -1,27 +1,17 @@
 import { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
-import { FormUser } from "../../components/formUser";
+import { useEffect, useState } from "react";
+import { FormUser, UpdateUser } from "../../components/formUser";
 import { useUsers } from "../../contexts/users";
-import apiClient from "../../services/api-client";
 import { User } from "../../types/user";
 import { RegisterContainer } from "../../styles/pages-styles/edit-user-style";
 
 export default function EditUser() {
   const [erro, setErro] = useState("")
-  const [updateUser, setUpdateUser] = useState({
+  const [updateUser, setUpdateUser] = useState<UpdateUser>({
     deleted: false,
     updated: false,
   })
-  const [user, setUser] = useState<User>({
-    name: "",
-    age: "",
-    language: "",
-    operationArea: "",
-    professionalSituation: "",
-    experience: false,
-    linkedin: '',
-    github: ""
-  })
+  const [user, setUser] = useState<User>({} as User)
   const { users, createUser } = useUsers()
 
   const router = useRouter()

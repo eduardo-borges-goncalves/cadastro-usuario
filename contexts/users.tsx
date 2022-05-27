@@ -10,13 +10,7 @@ type UsersProps = {
   setUsers: Dispatch<SetStateAction<User[]>>
 }
 
-export const UsersContext = createContext<UsersProps>({
-  users: [],
-  createUser: (_:User) => {}, 
-  upUser: (_:User) => {}, 
-  delUser: (_:string | string[] | undefined) => {}, 
-  setUsers: () => {}
-})
+export const UsersContext = createContext<UsersProps>({} as UsersProps)
 
 type UsersProviderProps =  {
   children: ReactNode

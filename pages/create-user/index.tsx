@@ -11,16 +11,7 @@ export default function CreateUser() {
   const [updateUser, setUpdateUser] = useState<UpdateUser>({
     new: false 
   })
-  const [user, setUser] = useState<User>({
-    name: "",
-    age: "",
-    language: "",
-    operationArea: "",
-    professionalSituation: "",
-    experience: false,
-    linkedin: '',
-    github: ""
-  })
+  const [user, setUser] = useState<User>({} as User)
   const {createUser} = useUsers()
 
   const router = useRouter()
