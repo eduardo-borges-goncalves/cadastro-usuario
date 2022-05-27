@@ -4,7 +4,7 @@ import { FormUser } from "../../components/formUser";
 import { useUsers } from "../../contexts/users";
 import apiClient from "../../services/api-client";
 import { User } from "../../types/user";
-import { RegisterContainer } from "./style";
+import { RegisterContainer } from "../../styles/pages-styles/edit-user-style";
 
 export default function RegisterUser() {
   const [erro, setErro] = useState("")

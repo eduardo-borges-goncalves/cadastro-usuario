@@ -67,7 +67,7 @@ export const FormUser = ({
     <FormWrapper action="" onSubmit={_id ? (e) => updateUserFunc(e) :(e) => createUserAPI(e) }>
       <fieldset className="f-1">
         <input
-          value={_id && user.name}
+          value={_id && user.name || ""}
           className="i-1"
           required
           minLength={3}
@@ -75,7 +75,7 @@ export const FormUser = ({
           placeholder="Nome"
           onChange={(e) => setUser({ ...user, name: e.target.value })} />
         <input
-          value={_id && user.age }
+          value={_id && user.age || ""}
           className="i-2"
           required
           type="text"
@@ -84,21 +84,21 @@ export const FormUser = ({
       </fieldset>
       <fieldset className="f-2">
         <input
-          value={_id && user.language}
+          value={_id && user.language || ""}
           required
           minLength={3}
           type="text"
           placeholder="Linguagem"
           onChange={(e) => setUser({ ...user, language: e.target.value })} />
         <input
-          value={_id && user.operationArea}
+          value={_id && user.operationArea || ""}
           required
           minLength={3}
           type="text"
           placeholder="Área de atuação "
           onChange={(e) => setUser({ ...user, operationArea: e.target.value })} />
         <input
-          value={_id && user.professionalSituation}
+          value={_id && user.professionalSituation || ""}
           required
           minLength={3}
           type="text"
@@ -128,14 +128,14 @@ export const FormUser = ({
       </fieldset>
       <fieldset className="f-4">
         <input
-          value={_id && user.linkedin}
+          value={_id && user.linkedin || ""}
           required
           minLength={3}
           type="text"
           placeholder="LinkedIn"
           onChange={(e) => setUser({ ...user, linkedin: e.target.value })} />
         <input
-          value={_id && user.github}
+          value={_id && user.github || ""}
           required
           minLength={3}
           type="text"
@@ -144,21 +144,27 @@ export const FormUser = ({
       </fieldset>
       <div className="buttons">
         <Link href="/">
-          <GrayButton disabled={disabledBtn}> Cancelar </GrayButton> 
+          <a>
+            <GrayButton disabled={disabledBtn}> Cancelar </GrayButton> 
+          </a>
         </Link>
         {_id && 
+          <a>
             <DeleteButton 
               disabled={disabledBtn} 
               type="button" 
               onClick={() => deleteUser()}>
-              Excluir
+                Excluir
             </DeleteButton>
+          </a>
         }
-        <PrimaryBlueButton 
-          disabled={disabledBtn} 
-          type="submit">
-          {_id ? "Atualizar" : "Cadastrar"}
-        </PrimaryBlueButton>
+        <a>
+          <PrimaryBlueButton 
+            disabled={disabledBtn} 
+            type="submit">
+            {_id ? "Atualizar" : "Cadastrar"}
+          </PrimaryBlueButton>
+        </a>
       </div>
     </FormWrapper>
   )
