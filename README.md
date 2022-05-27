@@ -33,25 +33,3 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-- qualquer framework react
-- qualquer biblioteca ui react
-- qualquer backend/banco de dados
-
----
-exemplos: next.js, chakra ui, sqlite
----
-
-Formulario - Crud 
-Sistema de usuarios: 
-- cadastrar usuario.
-- editar usuario.
-- listar usuarios.
-O que salvar de cada usuanpm install next@canaryrio(informações) fica a seu criterio, inclusive features adicionais.
-Entrega: arquivo zip ou github.
-Prazo limite: 3 dias
-
----
-Bonus:
-- testes (jest / testing library)
-- testes com cypress
-- redux
