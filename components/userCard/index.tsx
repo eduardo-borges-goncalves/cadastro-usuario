@@ -1,5 +1,4 @@
 import Link from "next/link"
-import apiClient from "../../services/api-client"
 import { User } from "../../types/user"
 
 export const UserCard = ({

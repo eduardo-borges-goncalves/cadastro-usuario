@@ -24,7 +24,7 @@ describe("test home page", () => {
 
   test("button is on screen", ()=> {
     makeSUT()
-    const button = screen.getByText(text)
+    const button = screen.getByTestId("button")
     expect(button).toBeInTheDocument();
   })
 

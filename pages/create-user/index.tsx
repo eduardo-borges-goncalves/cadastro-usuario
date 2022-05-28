@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import { FormUser, UpdateUser } from "../../components/FormUser";
+import { FormUser, UpdateUser } from "../../components/formUser";
 import { useUsers } from "../../contexts/users";
 import apiClient from "../../services/api-client";
 import { User } from "../../types/user";
@@ -11,16 +11,7 @@ export default function CreateUser() {
   const [updateUser, setUpdateUser] = useState<UpdateUser>({
     new: false 
   })
-  const [user, setUser] = useState<User>({
-    name: "",
-    age: "",
-    language: "",
-    operationArea: "",
-    professionalSituation: "",
-    experience: false,
-    linkedin: '',
-    github: ""
-  })
+  const [user, setUser] = useState<User>({} as User)
   const {createUser} = useUsers()
 
   const router = useRouter()

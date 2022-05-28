@@ -10,7 +10,7 @@ export type BtnProps = {
 
 export const PrimaryBlueButton = ({children, onClick, type, disabled}:BtnProps) => (
   <>
-  <ButtonWrapper type={type} onClick={onClick} disabled={disabled} >
+  <ButtonWrapper type={type} onClick={onClick} disabled={disabled} data-testid="button" >
     {children}
   </ButtonWrapper>
   </>
